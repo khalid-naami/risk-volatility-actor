@@ -1,0 +1,89 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "type": "object",
+    "properties": {
+      "symbol": {
+        "type": "string",
+        "description": "Ticker symbol analyzed"
+      },
+      "name": {
+        "type": "string",
+        "description": "Full asset name"
+      },
+      "latestPrice": {
+        "type": "number",
+        "description": "Latest recorded closing price"
+      },
+      "currentSharpe": {
+        "type": "number",
+        "description": "Annualized Sharpe ratio (excess return / volatility)"
+      },
+      "currentSortino": {
+        "type": "number",
+        "description": "Annualized Sortino ratio (excess return / downside deviation)"
+      },
+      "calmarRatio": {
+        "type": "number",
+        "description": "Calmar ratio (annualized return / max drawdown)"
+      },
+      "maxDrawdownPct": {
+        "type": "number",
+        "description": "Maximum peak-to-trough drawdown percentage"
+      },
+      "avgDrawdownRecoveryDays": {
+        "type": "number",
+        "description": "Average business days to recover from drawdowns"
+      },
+      "annualizedVolatilityPct": {
+        "type": "number",
+        "description": "Annualized return standard deviation percentage"
+      },
+      "annualizedCagrPct": {
+        "type": "number",
+        "description": "Compound Annual Growth Rate percentage"
+      },
+      "valueAtRisk95Pct": {
+        "type": "number",
+        "description": "Daily 95% Value at Risk (VaR)"
+      },
+      "valueAtRisk99Pct": {
+        "type": "number",
+        "description": "Daily 99% Value at Risk (VaR)"
+      },
+      "expectedShortfall95Pct": {
+        "type": "number",
+        "description": "Daily 95% Conditional Value at Risk (CVaR / Expected Shortfall)"
+      },
+      "drawdownEvents": {
+        "type": "array",
+        "description": "List of historical drawdown and recovery periods"
+      },
+      "riskAssessment": {
+        "type": "object",
+        "description": "AI qualitative risk rating and summary"
+      }
+    },
+    "required": ["symbol", "name", "currentSharpe", "maxDrawdownPct", "annualizedVolatilityPct"]
+  },
+  "views": {
+    "overview": {
+      "title": "Risk & Volatility Summary",
+      "transformation": {
+        "fields": [
+          "symbol",
+          "name",
+          "currentSharpe",
+          "currentSortino",
+          "maxDrawdownPct",
+          "avgDrawdownRecoveryDays",
+          "annualizedVolatilityPct",
+          "annualizedCagrPct"
+        ]
+      },
+      "display": {
+        "component": "table"
+      }
+    }
+  }
+}
