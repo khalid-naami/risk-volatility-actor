@@ -1,0 +1,18 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Risk & Volatility Intelligence Output Schema",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Risk & Volatility Dataset Results",
+      "description": "Calculated Sharpe ratios, Sortino, drawdowns, recovery days, and return distributions",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    },
+    "summary": {
+      "type": "string",
+      "title": "AI Executive Risk Summary",
+      "description": "Cross-asset risk rankings, Sharpe benchmarks, and maximum drawdown risk alerts",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/OUTPUT_RISK_SUMMARY"
+    }
+  }
+}
