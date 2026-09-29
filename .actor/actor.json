@@ -1,0 +1,16 @@
+{
+  "actorSpecification": 1,
+  "name": "risk-volatility-actor",
+  "title": "Risk & Volatility Intelligence Actor (Sharpe, Sortino, Drawdowns, Recovery & VaR)",
+  "description": "Calculates institutional quantitative risk metrics for Stocks, ETFs, Crypto, Forex, and Indices: Annualized Sharpe & Sortino ratios, Maximum Drawdowns, recovery duration timelines, 1-year rolling Sharpe series, return distributions, and Value at Risk (VaR / CVaR).",
+  "version": "1.0",
+  "meta": {
+    "templateId": "python-empty"
+  },
+  "input": "./input_schema.json",
+  "dockerfile": "../Dockerfile",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "output": "./output_schema.json"
+}
