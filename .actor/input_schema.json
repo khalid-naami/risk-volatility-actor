@@ -1,0 +1,67 @@
+{
+  "title": "Risk & Volatility Intelligence Input Schema",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "symbols": {
+      "title": "Symbols / Tickers",
+      "type": "array",
+      "description": "List of tickers or symbols to analyze (e.g. SPY, QQQ, AAPL, NVDA, TSLA, BTC-USD, EURUSD=X, GC=F).",
+      "editor": "stringList",
+      "default": ["SPY", "QQQ", "AAPL", "NVDA"],
+      "prefill": ["SPY", "QQQ", "AAPL", "NVDA"]
+    },
+    "yearsBack": {
+      "title": "Years of Historical Data",
+      "type": "integer",
+      "description": "Historical time horizon in years for drawdown analysis and risk calculation (e.g., 5, 10, 20).",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 50,
+      "unit": "years"
+    },
+    "startDate": {
+      "title": "Custom Start Date (Optional)",
+      "type": "string",
+      "description": "Optional explicit start date (YYYY-MM-DD). If provided, overrides yearsBack.",
+      "editor": "textfield"
+    },
+    "endDate": {
+      "title": "Custom End Date (Optional)",
+      "type": "string",
+      "description": "Optional explicit end date (YYYY-MM-DD). Defaults to current date.",
+      "editor": "textfield"
+    },
+    "riskFreeRate": {
+      "title": "Annual Risk-Free Rate (%)",
+      "type": "number",
+      "description": "Benchmark risk-free rate percentage used for Sharpe and Sortino calculations (e.g. 4.0 for 4%).",
+      "default": 4.0,
+      "minimum": 0.0,
+      "maximum": 20.0,
+      "unit": "%"
+    },
+    "rollingWindow": {
+      "title": "Rolling Window for Sharpe (Trading Days)",
+      "type": "integer",
+      "description": "Window size for rolling Sharpe ratio calculation (default 252 trading days / 1 year).",
+      "default": 252,
+      "minimum": 20,
+      "maximum": 504,
+      "unit": "days"
+    },
+    "includeTimeSeries": {
+      "title": "Include Full Time-Series (Drawdowns & Rolling Sharpe)",
+      "type": "boolean",
+      "description": "Include day-by-day drawdown series and rolling Sharpe time series arrays in the output.",
+      "default": true
+    },
+    "includeReturnDistribution": {
+      "title": "Include Return Distribution (Histogram & Gaussian Fit)",
+      "type": "boolean",
+      "description": "Include 50-bin return frequency distribution, Gaussian PDF curve, and Value at Risk (VaR / CVaR).",
+      "default": true
+    }
+  },
+  "required": ["symbols"]
+}
