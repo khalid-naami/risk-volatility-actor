@@ -127,7 +127,7 @@ def compute_risk_analytics(
     rolling_w = min(rolling_window, len(daily_returns))
     roll_mean = daily_returns.rolling(window=rolling_w).mean()
     roll_std = daily_returns.rolling(window=rolling_w).std()
-    rolling_sharpe = ((roll_mean - rf_daily) / roll_std * np.sqrt(252)).dropna()
+    rolling_sharpe = ((roll_mean - rf_daily) / roll_std * np.sqrt(252)).replace([np.inf, -np.inf], np.nan).dropna()
 
     # ── 4. VALUE AT RISK (VaR) & CONDITIONAL VaR (CVaR / EXPECTED SHORTFALL) ─
     ret_pct = daily_returns * 100.0
@@ -159,11 +159,13 @@ def compute_risk_analytics(
                 pdf_val = 0.0
             gaussian_pdf.append(round(float(pdf_val), 4))
 
+        raw_skew = float(stats.skew(daily_returns)) if sigma > 0 else 0.0
+        raw_kurt = float(stats.kurtosis(daily_returns)) if sigma > 0 else 0.0
         dist_payload = {
             "mean_daily_return_pct": round(mu, 4),
             "std_daily_return_pct": round(sigma, 4),
-            "skewness": round(float(stats.skew(daily_returns)), 3),
-            "kurtosis": round(float(stats.kurtosis(daily_returns)), 3),
+            "skewness": 0.0 if np.isnan(raw_skew) else round(raw_skew, 3),
+            "kurtosis": 0.0 if np.isnan(raw_kurt) else round(raw_kurt, 3),
             "sigma_levels": {
                 "minus_2_sigma": round(mu - 2 * sigma, 2),
                 "minus_1_sigma": round(mu - sigma, 2),
