@@ -2,7 +2,7 @@
 Multi-source Financial Data Fetcher (Yahoo Finance + Stooq Fallback).
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import io
 import requests
 import pandas as pd
@@ -32,7 +32,7 @@ def fetch_historical_prices(symbol: str, years_back: int = 5, start_date: str = 
 
     # Calculate date boundary
     if not end_date:
-        end_dt = datetime.now()
+        end_dt = datetime.now(timezone.utc).replace(tzinfo=None)
     else:
         end_dt = pd.to_datetime(end_date)
 
