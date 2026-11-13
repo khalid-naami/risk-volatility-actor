@@ -125,9 +125,13 @@ async def main() -> None:
             "assumed_risk_free_rate_pct": risk_free_rate,
             "top_risk_adjusted_performer": summary_rankings[0]["symbol"] if summary_rankings else None,
             "cross_asset_rankings": summary_rankings,
-            "status": "SUCCESS"
+            "status": "SUCCESS" if processed_count > 0 else "NO_DATA",
         }
+        await Actor.set_value("OUTPUT", exec_summary)
         await Actor.set_value("OUTPUT_RISK_SUMMARY", exec_summary)
+        if processed_count == 0:
+            await Actor.fail(status_message="Risk & Volatility Intelligence Actor produced 0 asset dossiers.")
+            return
 
         Actor.log.info(f"✅ Risk & Volatility Intelligence Actor completed! {processed_count} asset dossiers pushed to Apify Dataset.")
 
